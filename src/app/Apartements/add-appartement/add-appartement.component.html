@@ -1,0 +1,49 @@
+<form>
+  <div class="mb-3">
+    <label for="apartmentNumber" class="form-label">Apartment Number</label>
+    <input type="number" class="form-control" id="apartmentNumber" required>
+  </div>
+
+  <div class="mb-3">
+    <label for="floorNumber" class="form-label">Floor Number</label>
+    <input type="number" class="form-control" id="floorNumber"  required>
+  </div>
+
+  <div class="mb-3">
+    <label for="surface" class="form-label">Surface </label>
+    <input type="text" class="form-control" id="surface"  required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label d-block">Terrace</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="terrace" id="terraceYes" value="yes">
+      <label class="form-check-label" for="terraceYes">Yes</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="terrace" id="terraceNo" value="no" checked>
+      <label class="form-check-label" for="terraceNo">No</label>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label d-block">Category</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="category" id="s1" value="s+1">
+      <label class="form-check-label" for="s1">S+1</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="category" id="s2" value="s+2">
+      <label class="form-check-label" for="s2">S+2</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="radio" name="category" id="s3" value="s+3">
+      <label class="form-check-label" for="s3">S+3</label>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <button type="submit" class="btn btn-primary me-2">Add</button>
+    <button type="reset" class="btn btn-secondary">Reset</button>
+  </div>
+</form>
