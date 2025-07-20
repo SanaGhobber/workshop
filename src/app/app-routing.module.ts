@@ -27,13 +27,12 @@ const routes: Routes = [
             component: ApartementsByResidenceComponent
           },
           {path:"addApartment",component:AddAppartementComponent},
-         
         ]
       }
     ]
   },
   
-  {path:"ResidencesDetail",component:ResidenceDetailsComponent},
+  {path:"ResidencesDetail/:id",component:ResidenceDetailsComponent},
   {path:"addResidence",component:AddResidenceComponent},
  
  {

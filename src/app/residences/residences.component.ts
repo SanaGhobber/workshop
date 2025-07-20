@@ -1,29 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Residence } from 'core/models/residence';
+import { CommonService } from 'core/services/common.service';
+import { ResidenceService } from 'core/services/residence.service';
 
 @Component({
   selector: 'app-residences',
   templateUrl: './residences.component.html',
   styleUrls: ['./residences.component.css']
 })
-export class ResidencesComponent {
+export class ResidencesComponent implements OnInit {
 
-  constructor( private router:Router){}
-
-  listResidences: Residence[] = [
-    {id: 1, name: "El fel", address: "Borj Cedria",
-     image: "../../assets/images/gettyimages-1293762741-612x612.jpg", status: "Disponible"},
-    {id: 2, name: "El yasmine", address: "Ezzahra",
-     image: "../../assets/images/gettyimages-1357529194-612x612.jpg", status: "Disponible"},
-    {id: 3, name: "El Arij", address: "Rades",
-     image: "../../assets/images/istockphoto-1272163106-612x612.jpg", status: "Vendu"},
-    {id: 4, name: "El Anber", address: "inconnu",
-     image: "../../assets/images/pexels-jessica-bryant-592135-1370704.jpg", status: "En Construction"}
-  ];
+  listResidences: Residence[] = [];
 
   favorites: Residence[] = [];
   searchTerm: string = '';
+
+  constructor(
+    private router: Router,
+    private commonService: CommonService,
+    private residenceService: ResidenceService
+  ) {}
+
+  ngOnInit(): void {
+    this.residenceService.getResidences().subscribe(residences => {
+      this.listResidences = residences;
+    });
+  }
 
   get filteredResidences(): Residence[] {
     if (!this.searchTerm) {
@@ -51,10 +54,28 @@ export class ResidencesComponent {
     }
   }
 
+  getAddressCount(address: string): number {
+    return this.commonService.getSameValueOf(this.listResidences, 'address', address);
+  }
 
   goToDetail(id:number){
-    this.router.navigate(['/ResidencesDetail'],{
-      queryParams: {id: id}
+    this.router.navigate(['/ResidencesDetail', id]);
+  }
+
+  goToApartmentsList(residenceId: number): void {
+    this.router.navigate(['/Residences/apartmentByRes'], { queryParams: { residenceId: residenceId } });
+  }
+
+  deleteResidence(id: number): void {
+    this.residenceService.deleteResidenceAndApartments(id).subscribe({
+      next: () => {
+        this.listResidences = this.listResidences.filter(residence => residence.id !== id);
+        alert('Résidence supprimée avec succès.');
+      },
+      error: (err) => {
+        console.error('Erreur lors de la suppression de la résidence:', err);
+        alert('Erreur lors de la suppression de la résidence.');
+      }
     });
   }
 }

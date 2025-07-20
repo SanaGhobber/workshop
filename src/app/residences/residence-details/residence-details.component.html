@@ -1,5 +1,16 @@
-<button type="button" class="btn btn-warning">next</button>
-
-<button type="button" class="btn btn-primary"[routerLink]="['addResidence']">Add Residence</button>
-<button type="button" class="btn btn-info">update Residence</button>
-
+<div *ngIf="residence; else noResidence">
+  <h2>Détails de la résidence: {{ residence.name }}</h2>
+  <img [src]="residence.image" width="200" alt="Image de la résidence">
+  <p><strong>Adresse:</strong> {{ residence.address }}</p>
+  <p><strong>Status:</strong> 
+    <span *ngIf="residence.status === 'Disponible'" style="color: green;">&#10004; Disponible</span>
+    <span *ngIf="residence.status === 'En Construction'" style="color: orange;">&#9888; En Construction</span>
+    <span *ngIf="residence.status === 'Vendu'" style="color: red;">&#10060; Vendu</span>
+  </p>
+  <button class="btn btn-primary" (click)="goToNextResidence()">Next</button>
+  <button class="btn btn-success" (click)="goToAddResidence()" style="margin-left: 10px;">Add Residence</button>
+  <button class="btn btn-warning" (click)="goToUpdateResidence()" style="margin-left: 10px;">Update Residence</button>
+</div>
+<ng-template #noResidence>
+  <p>Résidence non trouvée.</p>
+</ng-template>

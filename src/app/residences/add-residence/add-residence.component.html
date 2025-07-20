@@ -1,1 +1,114 @@
-<p>add-residence works!</p>
+<form [formGroup]="residenceForm" (ngSubmit)="onSubmit()">
+  <input type="hidden" formControlName="id" />
+
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" id="name" class="form-control" formControlName="name" />
+    <div *ngIf="residenceForm.get('name')?.invalid && (residenceForm.get('name')?.dirty || residenceForm.get('name')?.touched)" class="text-danger">
+      <div *ngIf="residenceForm.get('name')?.errors?.['required']">Name is required.</div>
+      <div *ngIf="residenceForm.get('name')?.errors?.['minlength']">Name must be at least 3 characters long.</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="address" class="form-label">Address</label>
+    <input type="text" id="address" class="form-control" formControlName="address" />
+    <div *ngIf="residenceForm.get('address')?.invalid && (residenceForm.get('address')?.dirty || residenceForm.get('address')?.touched)" class="text-danger">
+      <div *ngIf="residenceForm.get('address')?.errors?.['required']">Address is required.</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="image" class="form-label">Image URL</label>
+    <input type="text" id="image" class="form-control" formControlName="image" />
+    <div *ngIf="residenceForm.get('image')?.invalid && (residenceForm.get('image')?.dirty || residenceForm.get('image')?.touched)" class="text-danger">
+      <div *ngIf="residenceForm.get('image')?.errors?.['required']">Image URL is required.</div>
+      <div *ngIf="residenceForm.get('image')?.errors?.['pattern']">Image URL must be valid.</div>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="status" class="form-label">Status</label>
+    <select id="status" class="form-select" formControlName="status">
+      <option *ngFor="let option of statusOptions" [value]="option">{{ option }}</option>
+    </select>
+  </div>
+
+  <div formArrayName="apartments">
+    <div *ngFor="let apartment of apartments.controls; let i = index" [formGroupName]="i" class="border p-3 mb-3">
+      <h5>Apartment {{ i + 1 }}</h5>
+      <button type="button" class="btn btn-danger btn-sm mb-2" (click)="removeApartment(i)">Remove Apartment</button>
+
+      <div class="mb-3">
+        <label for="apartmentNumber{{i}}" class="form-label">Apartment Number</label>
+        <input type="text" id="apartmentNumber{{i}}" class="form-control" formControlName="apartmentNumber" />
+        <div *ngIf="apartment.get('apartmentNumber')?.invalid && (apartment.get('apartmentNumber')?.dirty || apartment.get('apartmentNumber')?.touched)" class="text-danger">
+          <div *ngIf="apartment.get('apartmentNumber')?.errors?.['required']">Apartment Number is required.</div>
+          <div *ngIf="apartment.get('apartmentNumber')?.errors?.['pattern']">Apartment Number must be a number.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="floorNumber{{i}}" class="form-label">Floor Number</label>
+        <input type="text" id="floorNumber{{i}}" class="form-control" formControlName="floorNumber" />
+        <div *ngIf="apartment.get('floorNumber')?.invalid && (apartment.get('floorNumber')?.dirty || apartment.get('floorNumber')?.touched)" class="text-danger">
+          <div *ngIf="apartment.get('floorNumber')?.errors?.['required']">Floor Number is required.</div>
+          <div *ngIf="apartment.get('floorNumber')?.errors?.['pattern']">Floor Number must be a number.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="surface{{i}}" class="form-label">Surface</label>
+        <input type="text" id="surface{{i}}" class="form-control" formControlName="surface" />
+        <div *ngIf="apartment.get('surface')?.invalid && (apartment.get('surface')?.dirty || apartment.get('surface')?.touched)" class="text-danger">
+          <div *ngIf="apartment.get('surface')?.errors?.['required']">Surface is required.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label d-block">Terrace</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="terraceYes{{i}}" value="yes" formControlName="terrace" />
+          <label class="form-check-label" for="terraceYes{{i}}">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="terraceNo{{i}}" value="no" formControlName="terrace" />
+          <label class="form-check-label" for="terraceNo{{i}}">No</label>
+        </div>
+      </div>
+
+      <div class="mb-3" *ngIf="apartment.get('terrace')?.value === 'yes'">
+        <label for="surfaceTerrace{{i}}" class="form-label">Surface Terrace</label>
+        <input type="text" id="surfaceTerrace{{i}}" class="form-control" formControlName="surfaceTerrace" />
+        <div *ngIf="apartment.get('surfaceTerrace')?.invalid && (apartment.get('surfaceTerrace')?.dirty || apartment.get('surfaceTerrace')?.touched)" class="text-danger">
+          <div *ngIf="apartment.get('surfaceTerrace')?.errors?.['required']">Surface Terrace is required.</div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label d-block">Category</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="s1{{i}}" value="s+1" formControlName="category" />
+          <label class="form-check-label" for="s1{{i}}">S+1</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="s2{{i}}" value="s+2" formControlName="category" />
+          <label class="form-check-label" for="s2{{i}}">S+2</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" id="s3{{i}}" value="s+3" formControlName="category" />
+          <label class="form-check-label" for="s3{{i}}">S+3</label>
+        </div>
+        <div *ngIf="apartment.get('category')?.invalid && (apartment.get('category')?.dirty || apartment.get('category')?.touched)" class="text-danger">
+          <div *ngIf="apartment.get('category')?.errors?.['required']">Category is required.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-secondary mb-3" (click)="addApartment()">Add Apartment</button>
+
+  <div class="d-flex justify-content-end">
+    <button type="submit" class="btn btn-primary" [disabled]="residenceForm.invalid">Add Residence</button>
+  </div>
+</form>

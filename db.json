@@ -1,0 +1,32 @@
+{
+  "residences": [
+    {
+      "id": 1,
+      "name": "El fel",
+      "address": "Borj Cedria",
+      "image": "../../assets/images/gettyimages-1293762741-612x612.jpg",
+      "status": "Disponible"
+    },
+    {
+      "id": 2,
+      "name": "El yasmine",
+      "address": "Ezzahra",
+      "image": "../../assets/images/gettyimages-1357529194-612x612.jpg",
+      "status": "Disponible"
+    },
+    {
+      "id": 3,
+      "name": "El Arij",
+      "address": "Rades",
+      "image": "../../assets/images/istockphoto-1272163106-612x612.jpg",
+      "status": "Vendu"
+    },
+    {
+      "id": 4,
+      "name": "El Anber",
+      "address": "inconnu",
+      "image": "../../assets/images/pexels-jessica-bryant-592135-1370704.jpg",
+      "status": "En Construction"
+    }
+  ]
+}

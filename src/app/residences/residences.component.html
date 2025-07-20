@@ -13,8 +13,8 @@
       <button type="button" class="btn btn-secondary" (click)="showLocation(residence)">show location</button>
       <button type="button" class="btn btn-success" (click)="addToFavorites(residence)" style="margin-left: 10px;">like</button>
       <button type="button" class="btn btn-success" (click)="goToDetail(residence.id)" style="margin-left: 10px;">detail</button>
-      <a routerLink="apartmentByRes">appartement list</a>
-
+      <button type="button" class="btn btn-info" (click)="goToApartmentsList(residence.id)" style="margin-left: 10px;">appartements list</button>
+      <button type="button" class="btn btn-danger" (click)="deleteResidence(residence.id)" style="margin-left: 10px;">supprimer</button>
     </div>
   </div>
 </div>
